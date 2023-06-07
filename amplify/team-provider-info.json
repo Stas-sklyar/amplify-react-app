@@ -17,6 +17,9 @@
       },
       "api": {
         "amplifyreactapp": {}
+      },
+      "storage": {
+        "s34781ae10": {}
       }
     }
   }
