@@ -29,8 +29,7 @@ const App = ({ signOut }) => {
     const apiData = await API.graphql({ query: listNotes });
     const notesFromAPI = apiData.data.listNotes.items;
     await Promise.all(
-      notesFromAPI.map(async (note) => {
-        console.log(note); 
+      notesFromAPI.map(async (note) => { 
         if (note.image) {
           const url = await Storage.get(note.id);
           note.image = url;
@@ -38,7 +37,6 @@ const App = ({ signOut }) => {
         return note;
       })
     );
-    console.log(notesFromAPI); 
     setNotes(notesFromAPI);
   }
 
