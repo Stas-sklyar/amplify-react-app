@@ -30,13 +30,15 @@ const App = ({ signOut }) => {
     const notesFromAPI = apiData.data.listNotes.items;
     await Promise.all(
       notesFromAPI.map(async (note) => {
+        console.log(note); 
         if (note.image) {
-          const url = await Storage.get(note.name);
+          const url = await Storage.get(note.id);
           note.image = url;
         }
         return note;
       })
     );
+    console.log(notesFromAPI); 
     setNotes(notesFromAPI);
   }
 
@@ -49,11 +51,11 @@ const App = ({ signOut }) => {
       description: form.get("description"),
       image: image.name,
     };
-    if (!!data.image) await Storage.put(image.name, image);
-    await API.graphql({
+    const response = await API.graphql({
       query: createNoteMutation,
       variables: { input: data },
     });
+    if (!!data.image) await Storage.put(response.data.createNote.id, image);
     fetchNotes();
     event.target.reset();
   }
